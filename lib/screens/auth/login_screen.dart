@@ -12,6 +12,8 @@ class _SignInScreenState extends State<SignInScreen> {
   late final TextEditingController _passwordController;
   final _signInFormKey = GlobalKey<FormState>();
 
+  bool _isShowPassword = false;
+
   @override
   void initState() {
     super.initState();
@@ -60,8 +62,18 @@ class _SignInScreenState extends State<SignInScreen> {
                         CustomTextFormField(
                           controller: _passwordController,
                           hintText: StringsResource.enterPassword,
+                          obscureText: !_isShowPassword,
                           prefixIcon: const Icon(Icons.lock_outline,
                               color: ColorsResource.primaryColor),
+                          suffixIcon: IconButton(
+                              onPressed: () => setState(
+                                  () => _isShowPassword = !_isShowPassword),
+                              icon: Icon(
+                                !_isShowPassword
+                                    ? Icons.visibility_off_outlined
+                                    : Icons.visibility_outlined,
+                                color: ColorsResource.primaryColor,
+                              )),
                           validator: (password) =>
                               Validation.validatePassword(password),
                         ),
